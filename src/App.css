@@ -1,0 +1,36 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  font-family: "LeagueSpartan";
+  src: url("./assets/fonts/LeagueSpartan-VariableFont_wght.ttf");
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+}
+
+#root {
+  height: 100vh;
+  width: 100vw;
+}
+
+body {
+  height: max-content;
+  position: relative;
+  overflow-x: hidden;
+  overflow-y: hidden;
+  font-family: "LeagueSpartan", sans-serif;
+}
+
+.transition {
+  transition: all 0.3s linear;
+  -webkit-transition: all 0.3s linear;
+  -moz-transition: all 0.3s linear;
+  -ms-transition: all 0.3s linear;
+  -o-transition: all 0.3s linear;
+}
