@@ -24,7 +24,7 @@ function App() {
 
   const NumberClassName = `${
     Themes[currentThemeIndex].KeyBackground
-  } transition text-3xl w-4/5 h-3/4 text-center ${
+  } transition text-3xl sm:w-4/5 sm:h-3/4 w-full h-full text-center ${
     Themes[currentThemeIndex].KeyShadow
   } rounded-xl flex justify-center items-center ${
     currentThemeIndex === 0
@@ -32,8 +32,8 @@ function App() {
       : Themes[currentThemeIndex].MainText
   } ${Themes[currentThemeIndex].HoverKey}`;
 
-  const DeleteClassName = `${Themes[currentThemeIndex].OperatorKeyBackground} transition text-3xl w-4/5 h-3/4 text-center ${Themes[currentThemeIndex].OperatorKeyShadow} rounded-xl flex justify-center items-center text-white`;
-  const EqualClassName = `col-span-2 ${Themes[currentThemeIndex].EqualKeyBackground} transition text-3xl w-4/5 h-3/4 text-center ${Themes[currentThemeIndex].EqualKeyShadow} rounded-xl flex justify-center items-center ${Themes[currentThemeIndex].MainText}`;
+  const DeleteClassName = `${Themes[currentThemeIndex].OperatorKeyBackground} transition text-3xl sm:w-4/5 sm:h-3/4 w-full h-full text-center ${Themes[currentThemeIndex].OperatorKeyShadow} rounded-xl flex justify-center items-center text-white`;
+  const EqualClassName = `col-span-2 ${Themes[currentThemeIndex].EqualKeyBackground} transition text-3xl sm:w-4/5 sm:h-3/4 w-full h-full text-center ${Themes[currentThemeIndex].EqualKeyShadow} rounded-xl flex justify-center items-center ${Themes[currentThemeIndex].MainText}`;
 
   const handleThemeChange = () => {
     setCurrentThemeIndex((prevIndex) => {
@@ -136,7 +136,7 @@ function App() {
         break;
       case "/":
         if (parseFloat(Input) === 0) {
-          return setInput("Wax Nta 3antiiz 9asem 3la 0 HHHHHHHHHHHH");
+          return setInput("Wax Nta 3antiiz 9asem 3la 0 🤓☝️");
         }
         Result = parseFloat(Input) / parseFloat(UpperInput);
         setInput(Result.toString());
