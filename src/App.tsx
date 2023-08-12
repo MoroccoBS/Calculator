@@ -207,12 +207,12 @@ function App() {
           >
             <motion.div
               id="screen"
-              className={`translate-y-3/4 w-full h-full text-display flex justify-end items-center opacity-30`}
+              className={`break-all translate-y-3/4 w-full h-full text-display flex justify-end items-center opacity-30`}
             >
               {UpperInput}
             </motion.div>
             <motion.div
-              className={`flex-wrap-reverse w-full h-full text-display flex justify-end items-center`}
+              className={`break-all flex-wrap-reverse w-full h-full text-display flex justify-end items-center`}
             >
               {Input}
             </motion.div>
