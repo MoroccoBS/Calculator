@@ -25,6 +25,10 @@ body {
   overflow-x: hidden;
   overflow-y: hidden;
   font-family: "LeagueSpartan", sans-serif;
+  @media screen and (max-width: 680px) {
+    overflow-y: auto;
+    height: 95vh;
+  }
 }
 
 .transition {
