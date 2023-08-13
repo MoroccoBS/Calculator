@@ -17,6 +17,7 @@ function App() {
   const [UpperInput, setUpperInput] = useState("");
   const [Operation, setOperation] = useState("");
   const [FinalResult, setFinalResult] = useState("");
+  // Modal for EasterEgg
   const [showModal, setShowModal] = useState(false);
 
   // Spring animation configuration
@@ -149,7 +150,7 @@ function App() {
   // Function to handle calculation and display the result
   const handleResult = () => {
     let Result;
-    if (Input === "" || Input === "-") {
+    if (Input === "" || Input === "-" || Input === ".") {
       return;
     }
     if (UpperInput === "") {
@@ -178,6 +179,7 @@ function App() {
         setOperation("");
         break;
       case "/":
+        // EasterEgg
         if (parseFloat(Input) === 0) {
           setShowModal(true);
           Result = "Wax Nta 3antiiz 9asem 3la 0 🤓☝️";
@@ -199,7 +201,7 @@ function App() {
   };
 
   const ifNAN = (value: string) => {
-    if (value === "NaN") {
+    if (value === "NaN" || value === "undefined") {
       return "Error";
     }
     return value;
@@ -217,12 +219,41 @@ function App() {
     }
   }, [FinalResult]);
 
+  // Listen for keyboard input
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      // Check if the key pressed is a number or an operator
+      if (/^[0-9]$/.test(event.key)) {
+        handleInput(event.key);
+      } else if (event.key === "+" || event.key === "-" || event.key === "/") {
+        handleOperation(event.key);
+      } else if (event.key === "=" || event.key === "Enter") {
+        handleResult();
+      } else if (event.key === "Backspace") {
+        handleDel("Del");
+      } else if (event.key === "Delete") {
+        handleDel("Reset");
+      } else if (event.key === "*") {
+        handleOperation("x");
+      }
+    };
+
+    // Add the event listener to the window object
+    window.addEventListener("keydown", handleKeyDown);
+
+    // Clean up the event listener when the component is unmounted
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  });
+
   // Render the calculator UI
   return (
     <>
       <div
         className={`w-full h-full flex justify-center items-center ${Themes[currentThemeIndex].Background} ${Themes[currentThemeIndex].MainText} transition relative`}
       >
+        {/* Modal for EasterEgg */}
         <AnimatePresence>
           {showModal && (
             <motion.div
