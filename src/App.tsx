@@ -266,7 +266,7 @@ function App() {
                 initial={{ x: 1000, rotate: 360 }}
                 animate={{ x: 0, rotate: 0 }}
                 transition={{ duration: 3 }}
-                className={`h-3/4 w-2/4 flex justify-center items-center gap-10 flex-col rounded-3xl ${Themes[currentThemeIndex].KeyPadBackground}`}
+                className={`shadow-2xl h-3/4 w-2/4 flex justify-center items-center gap-10 flex-col rounded-3xl ${Themes[currentThemeIndex].KeyPadBackground}`}
               >
                 <h2 className="sm:text-7xl text-3xl font-extrabold text-center">
                   Wax Nta 3antiiz 9asem 3la 0 🤓☝️
