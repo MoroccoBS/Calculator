@@ -52,6 +52,12 @@ function App() {
   // Function to handle number input
   const handleInput = (Number: string) => {
     setInput((prev) => {
+      if (Input === "Error") {
+        setTimeout(() => {
+          setInput("");
+        }, 500);
+        return "";
+      }
       if (Input === "") {
         return Number;
       }
@@ -73,6 +79,9 @@ function App() {
 
   // Function to handle operation input
   const handleOperation = (operation: string) => {
+    if (Input === "Error") {
+      return;
+    }
     if (Input === "") {
       if (operation === "-") {
         setInput(Input + operation);
@@ -140,7 +149,7 @@ function App() {
   // Function to handle calculation and display the result
   const handleResult = () => {
     let Result;
-    if (Input === "") {
+    if (Input === "" || Input === "-") {
       return;
     }
     if (UpperInput === "") {
@@ -148,23 +157,23 @@ function App() {
     }
     switch (Operation) {
       case "+":
-        Result = parseFloat(Input) + parseFloat(UpperInput);
-        setInput(Result.toString());
-        setFinalResult(Result.toString());
+        Result = ifNAN((parseFloat(Input) + parseFloat(UpperInput)).toString());
+        setInput(Result);
+        setFinalResult(Result);
         setUpperInput("");
         setOperation("");
         break;
       case "-":
-        Result = parseFloat(UpperInput) - parseFloat(Input);
-        setInput(Result.toString());
-        setFinalResult(Result.toString());
+        Result = ifNAN((parseFloat(UpperInput) - parseFloat(Input)).toString());
+        setInput(Result);
+        setFinalResult(Result);
         setUpperInput("");
         setOperation("");
         break;
       case "x":
-        Result = parseFloat(Input) * parseFloat(UpperInput);
-        setInput(Result.toString());
-        setFinalResult(Result.toString());
+        Result = ifNAN((parseFloat(Input) * parseFloat(UpperInput)).toString());
+        setInput(Result);
+        setFinalResult(Result);
         setUpperInput("");
         setOperation("");
         break;
@@ -177,14 +186,23 @@ function App() {
           setUpperInput("");
           setOperation("");
         } else {
-          Result = parseFloat(UpperInput) / parseFloat(Input);
-          setInput(Result.toString());
-          setFinalResult(Result.toString());
+          Result = ifNAN(
+            (parseFloat(UpperInput) / parseFloat(Input)).toString()
+          );
+          setInput(Result);
+          setFinalResult(Result);
           setUpperInput("");
           setOperation("");
         }
     }
     return Result;
+  };
+
+  const ifNAN = (value: string) => {
+    if (value === "NaN") {
+      return "Error";
+    }
+    return value;
   };
 
   // Update document title based on the final result
