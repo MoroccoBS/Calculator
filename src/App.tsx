@@ -82,21 +82,29 @@ function App() {
       return;
     } else if (UpperInput !== "") {
       const result = handleResult();
+      Animate("#screen");
       setUpperInput(result + " " + operation);
       setInput("");
       setOperation(operation);
       return;
     }
-    const tl = gsap.timeline();
-    tl.to("#screen", {
-      y: 0,
-      opacity: 0.6,
-      duration: 0.2,
-      fontSize: 30,
-    });
+    Animate("#screen");
     setUpperInput(Input + " " + operation);
     setOperation(operation);
     setInput("");
+  };
+
+  const Animate = (element: string) => {
+    gsap.fromTo(
+      element,
+      {
+        y: "75%",
+        opacity: 0.3,
+        duration: 0.2,
+        fontSize: 48,
+      },
+      { y: 0, opacity: 0.6, duration: 0.2, fontSize: 30 }
+    );
   };
 
   // Function to handle delete button click
