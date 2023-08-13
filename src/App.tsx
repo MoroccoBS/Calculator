@@ -1,3 +1,4 @@
+// Importing necessary dependencies and components
 import "./App.css";
 import Button from "./components/Button";
 import { useState, useEffect } from "react";
@@ -5,23 +6,26 @@ import { Themes } from "./components/Themes";
 import { motion } from "framer-motion";
 import { gsap } from "gsap";
 
+// Defining the main App component
 function App() {
+  // State variables
   const [currentThemeIndex, setCurrentThemeIndex] = useState(() => {
     const savedIndex = localStorage.getItem("currentThemeIndex");
     return savedIndex ? parseInt(savedIndex) : 0;
   });
-
   const [Input, setInput] = useState("");
   const [UpperInput, setUpperInput] = useState("");
   const [Operation, setOperation] = useState("");
   const [FinalResult, setFinalResult] = useState("");
 
+  // Spring animation configuration
   const spring = {
     type: "spring",
     stiffness: 600,
     damping: 25,
   };
 
+  // CSS class names for buttons based on the current theme
   const NumberClassName = `${
     Themes[currentThemeIndex].KeyBackground
   } transition text-3xl sm:w-4/5 sm:h-3/4 w-full h-full text-center ${
@@ -35,6 +39,7 @@ function App() {
   const DeleteClassName = `${Themes[currentThemeIndex].OperatorKeyBackground} transition text-3xl sm:w-4/5 sm:h-3/4 w-full h-full text-center ${Themes[currentThemeIndex].OperatorKeyShadow} rounded-xl flex justify-center items-center text-white`;
   const EqualClassName = `col-span-2 ${Themes[currentThemeIndex].EqualKeyBackground} transition text-3xl sm:w-4/5 sm:h-3/4 w-full h-full text-center ${Themes[currentThemeIndex].EqualKeyShadow} rounded-xl flex justify-center items-center ${Themes[currentThemeIndex].MainText}`;
 
+  // Function to handle theme change
   const handleThemeChange = () => {
     setCurrentThemeIndex((prevIndex) => {
       const nextIndex = (prevIndex + 1) % Themes.length;
@@ -43,6 +48,7 @@ function App() {
     });
   };
 
+  // Function to handle number input
   const handleInput = (Number: string) => {
     setInput((prev) => {
       if (Input === "") {
@@ -63,13 +69,21 @@ function App() {
       return prev + Number;
     });
   };
+
+  // Function to handle operation input
   const handleOperation = (operation: string) => {
     if (Input === "") {
       if (operation === "-") {
         setInput(Input + operation);
       }
       return;
+    } else if (Input === "-") {
+      return;
     } else if (UpperInput !== "") {
+      const result = handleResult();
+      setUpperInput(result + " " + operation);
+      setInput("");
+      setOperation(operation);
       return;
     }
     const tl = gsap.timeline();
@@ -84,6 +98,7 @@ function App() {
     setInput("");
   };
 
+  // Function to handle delete button click
   const handleDel = (Option: string) => {
     if (Option === "Del") {
       setInput(Input.slice(0, -1));
@@ -93,17 +108,27 @@ function App() {
     }
   };
 
+  // Functions for handling long press on delete button
+  let Timeout: number;
   const onMouseDown = () => {
-    setTimeout(() => {
+    Timeout = setTimeout(() => {
       const interval = setInterval(() => {
         setInput((prevInput) => prevInput.slice(0, -1));
-      }, 50);
+      }, 100);
       setTimeout(() => {
         clearInterval(interval);
-      }, 500);
-    }, 500);
+      }, 1000);
+    }, 750);
+
+    return () => {
+      Timeout;
+    };
+  };
+  const onMouseUp = () => {
+    clearTimeout(Timeout);
   };
 
+  // Function to handle calculation and display the result
   const handleResult = () => {
     let Result;
     if (Input === "") {
@@ -138,14 +163,16 @@ function App() {
         if (parseFloat(Input) === 0) {
           return setInput("Wax Nta 3antiiz 9asem 3la 0 🤓☝️");
         }
-        Result = parseFloat(Input) / parseFloat(UpperInput);
+        Result = parseFloat(UpperInput) / parseFloat(Input);
         setInput(Result.toString());
         setFinalResult(Result.toString());
         setUpperInput("");
         setOperation("");
     }
+    return Result;
   };
 
+  // Update document title based on the final result
   useEffect(() => {
     if (FinalResult === "") {
       document.title = "Calculator";
@@ -157,6 +184,7 @@ function App() {
     }
   }, [FinalResult]);
 
+  // Render the calculator UI
   return (
     <>
       <div
@@ -241,6 +269,7 @@ function App() {
             <Button
               onClick={() => handleDel("Del")}
               onMouseDown={onMouseDown}
+              onMouseUp={onMouseUp}
               ClassName={DeleteClassName}
             >
               Del
