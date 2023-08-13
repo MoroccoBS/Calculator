@@ -3,7 +3,7 @@ import "./App.css";
 import Button from "./components/Button";
 import { useState, useEffect } from "react";
 import { Themes } from "./components/Themes";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { gsap } from "gsap";
 
 // Defining the main App component
@@ -17,6 +17,7 @@ function App() {
   const [UpperInput, setUpperInput] = useState("");
   const [Operation, setOperation] = useState("");
   const [FinalResult, setFinalResult] = useState("");
+  const [showModal, setShowModal] = useState(false);
 
   // Spring animation configuration
   const spring = {
@@ -161,13 +162,19 @@ function App() {
         break;
       case "/":
         if (parseFloat(Input) === 0) {
-          return setInput("Wax Nta 3antiiz 9asem 3la 0 🤓☝️");
+          setShowModal(true);
+          Result = "Wax Nta 3antiiz 9asem 3la 0 🤓☝️";
+          setInput("");
+          setFinalResult("Wax Nta 3antiiz 9asem 3la 0 🤓☝️");
+          setUpperInput("");
+          setOperation("");
+        } else {
+          Result = parseFloat(UpperInput) / parseFloat(Input);
+          setInput(Result.toString());
+          setFinalResult(Result.toString());
+          setUpperInput("");
+          setOperation("");
         }
-        Result = parseFloat(UpperInput) / parseFloat(Input);
-        setInput(Result.toString());
-        setFinalResult(Result.toString());
-        setUpperInput("");
-        setOperation("");
     }
     return Result;
   };
@@ -188,8 +195,36 @@ function App() {
   return (
     <>
       <div
-        className={`w-full h-full flex justify-center items-center ${Themes[currentThemeIndex].Background} ${Themes[currentThemeIndex].MainText} transition`}
+        className={`w-full h-full flex justify-center items-center ${Themes[currentThemeIndex].Background} ${Themes[currentThemeIndex].MainText} transition relative`}
       >
+        <AnimatePresence>
+          {showModal && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className={`w-full h-full absolute flex justify-center items-center bg-black/50`}
+            >
+              <motion.div
+                initial={{ x: 1000, rotate: 360 }}
+                animate={{ x: 0, rotate: 0 }}
+                transition={{ duration: 3 }}
+                className={`h-3/4 w-2/4 flex justify-center items-center gap-10 flex-col rounded-3xl ${Themes[currentThemeIndex].KeyPadBackground}`}
+              >
+                <h2 className="sm:text-7xl text-3xl font-extrabold text-center">
+                  Wax Nta 3antiiz 9asem 3la 0 🤓☝️
+                </h2>
+                <button
+                  className={`${Themes[currentThemeIndex].EqualKeyBackground} transition text-3xl w-32 h-20 text-center ${Themes[currentThemeIndex].EqualKeyShadow} rounded-xl flex justify-center items-center ${Themes[currentThemeIndex].MainText}`}
+                  onClick={() => setShowModal((prev) => !prev)}
+                >
+                  Close
+                </button>
+              </motion.div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+
         <div
           className={`w-full sm:max-w-xl sm:w-3/5 h-full ${Themes[currentThemeIndex].Background} rounded-xl flex flex-col gap-5 p-6 transition`}
         >
