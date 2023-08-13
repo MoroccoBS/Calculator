@@ -78,7 +78,7 @@ function App() {
         setInput(Input + operation);
       }
       return;
-    } else if (Input === "-") {
+    } else if (Input === "-" || Input === ".") {
       return;
     } else if (UpperInput !== "") {
       const result = handleResult();
